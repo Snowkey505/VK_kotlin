@@ -1,5 +1,6 @@
 package com.example.vk_hw_02
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.aspectRatio
@@ -46,18 +47,29 @@ fun GifItem(gif: GifData) {
 
     val imageUrl = gif.images.original.url
 
-    AsyncImage(
-        model = ImageRequest.Builder(context)
-            .data(imageUrl)
-            .crossfade(true)
-            .decoderFactory(GifDecoder.Factory())
-            .build(),
-        contentDescription = null,
+    Box(
         modifier = Modifier
             .fillMaxWidth()
             .aspectRatio(1f)
-            .padding(8.dp),
-        placeholder = painterResource(R.drawable.placeholder),
-        error = painterResource(R.drawable.error_placeholder)
-    )
+            .padding(8.dp)
+            .clickable {
+                GifActivity.start(context, imageUrl)
+            },
+        contentAlignment = Alignment.Center
+    ) {
+        AsyncImage(
+            model = ImageRequest.Builder(context).memoryCacheKey(imageUrl)
+                .data(imageUrl)
+                .crossfade(true)
+                .decoderFactory(GifDecoder.Factory())
+                .build(),
+            contentDescription = null,
+            modifier = Modifier
+                .fillMaxWidth()
+                .aspectRatio(1f)
+                .padding(8.dp),
+            placeholder = painterResource(R.drawable.placeholder),
+            error = painterResource(R.drawable.error_placeholder)
+        )
+    }
 }

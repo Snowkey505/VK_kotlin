@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 
 class GiphyViewModel(private val repository: GiphyRepository) : ViewModel() {
-    var uiState by mutableStateOf<UiState>(UiState.Loading)
+    var uiState by mutableStateOf<UiState>(UiState.Loading)//stateflow отдавать наружу
         private set
 
     var gifs by mutableStateOf<List<GifData>>(emptyList())
